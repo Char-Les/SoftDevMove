@@ -1,7 +1,7 @@
 /*
   Charles Weng
   SoftDev2 pd7
-
+  K#02 - They lock us in the tower whenever we get caught ...which is often
   2018-2-8
 */
 
@@ -36,26 +36,26 @@ const clear = function(){
 const draw = function(e){
   e.preventDefault();
   animate = true;
-  while(animate)
-    drawC();
+  drawC();
 }
 
 // draws a dot
 const drawC = function(){
-  ctx.fillStyle ="#FF0000";
   clear();
+  ctx.fillStyle ="#FF0000";
   ctx.beginPath();
   // draw the circle
   ctx.moveTo(parseInt($('#slate')[0].width) / 2 , parseInt($('#slate')[0].height) / 2);
-  ctx.arc(parseInt($('#slate')[0].width) / 2 , parseInt($('#slate')[0].height) /  2, 15 + frame, 0, 2 * Math.PI);
+  ctx.arc(parseInt($('#slate')[0].width) / 2 , parseInt($('#slate')[0].height) /  2, 100 + Math.abs(frame % 100 - 50), 0, 2 * Math.PI);
   ctx.stroke();
   ctx.fill();
-
-  frame = window.requestAnimationFrame(drawC());
+  frame = window.requestAnimationFrame(drawC);
+  console.log(frame);
 }
 
 const stop = function(){
   animate = false;
+  window.cancelAnimationFrame(frame);
 }
 /*
   =======================================================================
@@ -64,6 +64,5 @@ const stop = function(){
 */
 
 // add event listenters
-$('#stop').click(stop)
-$('#clear').click(clear);
-$('#slate').click(draw);
+$('#stop').click(stop);
+$('#start').click(draw);
