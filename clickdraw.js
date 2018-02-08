@@ -14,12 +14,15 @@
 
 // canvas variable
 const ctx = $('#slate')[0].getContext('2d');
-// do circle?
-var circle;
 var frame = 0;
+// do circle or triangle?
+var circle;
+// how fast does the circle do its thing
+var circleSpeed = 21;
 // how do you like your square?
 var squareW = 60;
 var squareH = 50;
+// how fast in each direction should it go?
 var velocity = [2,2];
 
 
@@ -51,7 +54,7 @@ const drawC = function(){
   ctx.beginPath();
   // draw the circle
   ctx.moveTo(parseInt($('#slate')[0].width) / 2 , parseInt($('#slate')[0].height) / 2);
-  ctx.arc(parseInt($('#slate')[0].width) / 2 , parseInt($('#slate')[0].height) /  2, 100 + Math.abs(frame % 100 - 50), 0, 2 * Math.PI);
+  ctx.arc(parseInt($('#slate')[0].width) / 2 , parseInt($('#slate')[0].height) /  2, 100 + Math.abs(circleSpeed * frame % 100 - 50), 0, 2 * Math.PI);
   ctx.stroke();
   ctx.fill();
   frame = window.requestAnimationFrame(drawC);
