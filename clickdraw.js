@@ -14,10 +14,13 @@
 
 // canvas variable
 const ctx = $('#slate')[0].getContext('2d');
-var animate;
+// do circle?
+var circle;
 var frame = 0;
-// draw lines with black
-ctx.strokeStyle ="#000000";
+// how do you like your square?
+var squareW = 60;
+var squareH = 50;
+var velocity = [2,2];
 
 
 /*
@@ -33,13 +36,15 @@ const clear = function(){
 }
 
 // draw function
-const draw = function(e){
-  e.preventDefault();
-  animate = true;
-  drawC();
+const draw = function(){
+  if (circle){
+    drawC();
+    return;
+  }
+  drawR();
 }
 
-// draws a dot
+// does the circle thing
 const drawC = function(){
   clear();
   ctx.fillStyle ="#FF0000";
@@ -53,10 +58,24 @@ const drawC = function(){
   console.log(frame);
 }
 
+// does the dvd thing
+const drawR = function(){
+  clear();
+  ctx.fillStyle ="#FF0000";
+  // upper left corner of square
+  ctx.beginPath();
+  var squareC = [0,0];
+  squareC[0] = Math.abs(velocity[0] * frame % ((parseInt($('#slate')[0].width) - squareW) * 2) - parseInt($('#slate')[0].width - squareW));
+  squareC[1] = Math.abs(velocity[1] * frame % ((parseInt($('#slate')[0].height) - squareH) * 2) - parseInt($('#slate')[0].height - squareH));
+  ctx.fillRect(squareC[0], squareC[1], squareW, squareH);
+  frame = window.requestAnimationFrame(drawR);
+  console.log(frame);
+}
+
 const stop = function(){
-  animate = false;
   window.cancelAnimationFrame(frame);
 }
+
 /*
   =======================================================================
                                   Button Stuff
@@ -65,4 +84,12 @@ const stop = function(){
 
 // add event listenters
 $('#stop').click(stop);
-$('#start').click(draw);
+$('#start1').click(function(){
+  stop();
+  circle = true;
+  draw();
+});$('#start2').click(function(){
+  stop();
+  circle = false;
+  draw();
+});
