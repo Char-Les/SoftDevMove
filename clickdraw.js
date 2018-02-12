@@ -20,11 +20,13 @@ var circle;
 // how fast does the circle do its thing
 var circleSpeed = 21;
 // how do you like your square?
-var squareW = 60;
+var squareW = 70;
 var squareH = 50;
 // how fast in each direction should it go?
 var velocity = [2,2];
-
+// logo stuffs
+var logo = new Image();
+logo.src = "./DVD.png";
 
 /*
   =======================================================================
@@ -70,7 +72,8 @@ const drawR = function(){
   var squareC = [0,0];
   squareC[0] = Math.abs(velocity[0] * frame % ((parseInt($('#slate')[0].width) - squareW) * 2) - parseInt($('#slate')[0].width - squareW));
   squareC[1] = Math.abs(velocity[1] * frame % ((parseInt($('#slate')[0].height) - squareH) * 2) - parseInt($('#slate')[0].height - squareH));
-  ctx.fillRect(squareC[0], squareC[1], squareW, squareH);
+  // ctx.fillRect(squareC[0], squareC[1], squareW, squareH);
+  ctx.drawImage(logo, squareC[0], squareC[1], squareW, squareH);
   frame = window.requestAnimationFrame(drawR);
   console.log(frame);
 }
